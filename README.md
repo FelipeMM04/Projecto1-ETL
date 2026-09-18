@@ -567,21 +567,24 @@ CREATE TABLE fact_turismo_anual (
     CONSTRAINT fk_fact_ubicacion FOREIGN KEY (codigo_municipio) REFERENCES dim_ubicacion (codigo_municipio),
     CONSTRAINT fk_fact_categoria FOREIGN KEY (id_categoria) REFERENCES dim_categoria (id_categoria),
     CONSTRAINT fk_fact_tiempo FOREIGN KEY (anio) REFERENCES dim_tiempo (anio)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; ```
 
 ---
 
 ### 15. Analytical Queries and KPIs
-Todas las consultas analíticas fueron ejecutadas directamente sobre el Data Warehouse MySQL (dw_turismo_ods8) mediante sentencias SQL ANSI con agregaciones JOIN, GROUP BY y funciones ventana/subconsultas. Se garantiza que ninguna consulta se realizó sobre archivos CSV o DataFrames intermedios.
+
+Todas las consultas analíticas fueron ejecutadas directamente sobre el Data Warehouse MySQL (`dw_turismo_ods8`) mediante sentencias SQL ANSI con agregaciones JOIN, GROUP BY y funciones ventana/subconsultas. Se garantiza que ninguna consulta se realizó sobre archivos CSV o DataFrames intermedios.
 
 ---
 
-Requirement,Analytical Query,Metric or KPI,DW Tables Used,Main Result
-R1: Empleo por Territorio,"SELECT u.departamento, COUNT(DISTINCT u.codigo_municipio) AS municipios_cobertura, SUM(f.numero_de_empleados) AS total_empleos FROM fact_turismo_anual f JOIN dim_ubicacion u ON f.codigo_municipio = u.codigo_municipio GROUP BY u.departamento ORDER BY total_empleos DESC LIMIT 5;",Total Empleos Turísticos por Departamento,"fact_turismo_anual, dim_ubicacion","BOGOTÁ lidera la absorción laboral con 298,569 empleos, seguido por ANTIOQUIA (234,962) y BOLÍVAR (148,905)."
-R2: Capacidad Hotelera,"SELECT u.municipio, u.departamento, SUM(f.numero_de_habitaciones) AS total_habitaciones, SUM(f.numero_de_camas) AS total_camas, ROUND(SUM(f.numero_de_camas)/SUM(f.numero_de_habitaciones), 2) AS promedio_camas_por_habitacion FROM fact_turismo_anual f JOIN dim_ubicacion u ON f.codigo_municipio = u.codigo_municipio GROUP BY u.codigo_municipio, u.municipio, u.departamento HAVING total_habitaciones > 0 ORDER BY total_habitaciones DESC LIMIT 5;",Promedio de Camas por Habitación & Capacidad Instalada,"fact_turismo_anual, dim_ubicacion","BOGOTA D.C. concentra la mayor oferta instalada (427,741 habitaciones y 509,813 camas con 1.19 camas/habitación), mientras SANTA MARTA registra la mayor densidad (2.43 camas/habitación)."
-R3: Empleo por Categoría,"SELECT c.categoria, COUNT(DISTINCT c.sub_categoria) AS subcategorias_asociadas, SUM(f.numero_de_empleados) AS total_empleados, ROUND((SUM(f.numero_de_empleados)*100.0)/(SELECT SUM(numero_de_empleados) FROM fact_turismo_anual), 2) AS porcentaje_participacion FROM fact_turismo_anual f JOIN dim_categoria c ON f.id_categoria = c.id_categoria GROUP BY c.categoria ORDER BY total_empleados DESC;",Participación Relativa (%) de Empleo por Categoría,"fact_turismo_anual, dim_categoria","La categoría ESTABLECIMIENTOS DE ALOJAMIENTO TURÍSTICO genera el 45.33% del empleo total (692,015 empleos), seguida por AGENCIAS DE VIAJES (17.51%)."
-R4: Promedio por Prestador (PST),"SELECT c.categoria, COUNT(DISTINCT f.codigo_rnt) AS total_pst_registrados, SUM(f.numero_de_empleados) AS total_empleos, ROUND(AVG(f.numero_de_empleados), 2) AS promedio_empleados_por_pst FROM fact_turismo_anual f JOIN dim_categoria c ON f.id_categoria = c.id_categoria GROUP BY c.categoria ORDER BY promedio_empleados_por_pst DESC;",Densidad Promedio de Empleados por PST,"fact_turismo_anual, dim_categoria",La mayor densidad promedio de empleo la registran las EMPRESAS CAPTADORAS DE AHORRO PARA VIAJES (66.04 empleos/PST) y TRANSPORTE TERRESTRE AUTOMOTOR (21.23 empleos/PST).
-R5: Evolución Temporal,"SELECT t.anio, COUNT(f.id_fact) AS total_registros_anuales, SUM(f.numero_de_empleados) AS empleo_anual, SUM(f.numero_de_habitaciones) AS habitaciones_anuales, SUM(f.numero_de_camas) AS camas_anuales FROM fact_turismo_anual f JOIN dim_tiempo t ON f.anio = t.anio GROUP BY t.anio ORDER BY t.anio ASC;",Evolución Histórica y Volumen Anual de Registros,"fact_turismo_anual, dim_tiempo","Se evidencia un crecimiento constante de formalización turística, pasando de 43,204 registros (169,414 empleos) en 2019 a un pico de 239,733 empleos en 2026."
+| Requirement | Analytical Query | Metric or KPI | DW Tables Used | Main Result |
+| :--- | :--- | :--- | :--- | :--- |
+| **R1: Empleo por Territorio** | `SELECT u.departamento, COUNT(DISTINCT u.codigo_municipio) AS municipios_cobertura, SUM(f.numero_de_empleados) AS total_empleos FROM fact_turismo_anual f JOIN dim_ubicacion u ON f.codigo_municipio = u.codigo_municipio GROUP BY u.departamento ORDER BY total_empleos DESC LIMIT 5;` | Total Empleos Turísticos por Departamento | `fact_turismo_anual`, `dim_ubicacion` | BOGOTÁ lidera la absorción laboral con 298,569 empleos, seguido por ANTIOQUIA (234,962) y BOLÍVAR (148,905). |
+| **R2: Capacidad Hotelera** | `SELECT u.municipio, u.departamento, SUM(f.numero_de_habitaciones) AS total_habitaciones, SUM(f.numero_de_camas) AS total_camas, ROUND(SUM(f.numero_de_camas)/SUM(f.numero_de_habitaciones), 2) AS promedio_camas_por_habitacion FROM fact_turismo_anual f JOIN dim_ubicacion u ON f.codigo_municipio = u.codigo_municipio GROUP BY u.codigo_municipio, u.municipio, u.departamento HAVING total_habitaciones > 0 ORDER BY total_habitaciones DESC LIMIT 5;` | Promedio de Camas por Habitación & Capacidad Instalada | `fact_turismo_anual`, `dim_ubicacion` | BOGOTA D.C. concentra la mayor oferta instalada (427,741 habitaciones y 509,813 camas con 1.19 camas/habitación), mientras SANTA MARTA registra la mayor densidad (2.43 camas/habitación). |
+| **R3: Empleo por Categoría** | `SELECT c.categoria, COUNT(DISTINCT c.sub_categoria) AS subcategorias_asociadas, SUM(f.numero_de_empleados) AS total_empleados, ROUND((SUM(f.numero_de_empleados)*100.0)/(SELECT SUM(numero_de_empleados) FROM fact_turismo_anual), 2) AS porcentaje_participacion FROM fact_turismo_anual f JOIN dim_categoria c ON f.id_categoria = c.id_categoria GROUP BY c.categoria ORDER BY total_empleados DESC;` | Participación Relativa (%) de Empleo por Categoría | `fact_turismo_anual`, `dim_categoria` | La categoría ESTABLECIMIENTOS DE ALOJAMIENTO TURÍSTICO genera el 45.33% del empleo total (692,015 empleos), seguida por AGENCIAS DE VIAJES (17.51%). |
+| **R4: Promedio por Prestador (PST)** | `SELECT c.categoria, COUNT(DISTINCT f.codigo_rnt) AS total_pst_registrados, SUM(f.numero_de_empleados) AS total_empleos, ROUND(AVG(f.numero_de_empleados), 2) AS promedio_empleados_por_pst FROM fact_turismo_anual f JOIN dim_categoria c ON f.id_categoria = c.id_categoria GROUP BY c.categoria ORDER BY promedio_empleados_por_pst DESC;` | Densidad Promedio de Empleados por PST | `fact_turismo_anual`, `dim_categoria` | La mayor densidad promedio de empleo la registran las EMPRESAS CAPTADORAS DE AHORRO PARA VIAJES (66.04 empleos/PST) y TRANSPORTE TERRESTRE AUTOMOTOR (21.23 empleos/PST). |
+| **R5: Evolución Temporal** | `SELECT t.anio, COUNT(f.id_fact) AS total_registros_anuales, SUM(f.numero_de_empleados) AS empleo_anual, SUM(f.numero_de_habitaciones) AS habitaciones_anuales, SUM(f.numero_de_camas) AS camas_anuales FROM fact_turismo_anual f JOIN dim_tiempo t ON f.anio = t.anio GROUP BY t.anio ORDER BY t.anio ASC;` | Evolución Histórica y Volumen Anual de Registros | `fact_turismo_anual`, `dim_tiempo` | Se evidencia un crecimiento constante de formalización turística, pasando de 43,204 registros (169,414 empleos) en 2019 a un pico de 239,733 empleos en 2026. |
+
 ---
 
 ### 15.2 Declaración de Cumplimiento de la Fuente Obligatoria
@@ -591,7 +594,7 @@ R5: Evolución Temporal,"SELECT t.anio, COUNT(f.id_fact) AS total_registros_anua
 
 ---
 
-# Punto 16: Dashboard en Power BI (ODS 8 - Turismo Sostenible)
+# 16. Dashboard en Power BI (ODS 8 - Turismo Sostenible)
 
 ## 📌 Descripción General
 Se construyó un dashboard interactivo en **Power BI** para analizar los indicadores clave de oferta y empleo turístico en Colombia (ODS 8), conectándose directamente al **Data Warehouse** estructurado en MySQL.
@@ -599,7 +602,7 @@ Se construyó un dashboard interactivo en **Power BI** para analizar los indicad
 ---
 
 ## 🏗️ Modelo de Datos (Esquema en Estrella)
-El reporte se basa en un **Star Schema** compuesto por 1 tabla de hechos central y 4 tablas de dimensiones relacionadas de $1$ a Muchos ($1:*$):
+El reporte se basa en un **Star Schema** compuesto por 1 tabla de hechos central y 4 tablas de dimensiones relacionadas de 1 a Muchos ($1:*$):
 
 * **Fact Table:** `fact_turismo_anual` (Contiene las métricas numéricas acumuladas).
 * **Dimensions:** 
