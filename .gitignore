@@ -1,0 +1,14 @@
+# Excluir datasets pesados
+data/raw/*
+data/processed/*
+
+# Permitir los directorios pero ignorar los CSVs internos
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Excluir entornos virtuales y archivos temporales
+venv/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
