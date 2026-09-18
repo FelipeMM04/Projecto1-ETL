@@ -711,22 +711,26 @@ El proyecto sigue estrictamente un enfoque **ETL (Extract, Transform, Load)**, g
 
 # 19. System Architecture
 
+<pre>
 +-------------------------------------------------------------------------------------------------------------------+
-|                                            ANALYTICAL SOLUTION ARCHITECTURE                                       |
+|                                             ANALYTICAL SOLUTION ARCHITECTURE                                      |
 +-------------------------------------------------------------------------------------------------------------------+
 
-[ DATA SOURCE ]            [ INGESTION & STAGING ]                 [ TRANSFORMATION & ETL ]
+ [ DATA SOURCE ]             [ INGESTION & STAGING ]                 [ TRANSFORMATION & ETL ]
 +-------------------+      +-------------------------+             +--------------------------------------+
 |  RNT Open Data    | ---> |  Python / Pandas        | ----------> |  Dimensional Data Modeling           |
 |  (Raw Datasets)   |      |  Data Profiling (EDA)   |             |  Data Cleaning & Surrogate Keys      |
 +-------------------+      +-------------------------+             +--------------------------------------+
-|
-v
-[ BUSINESS INSIGHTS ]         [ BUSINESS INTELLIGENCE ]            [ DATA WAREHOUSE (PERSISTENCE) ]
+  |
+  v
+ [ BUSINESS INSIGHTS ]         [ BUSINESS INTELLIGENCE ]            [ DATA WAREHOUSE (PERSISTENCE) ]
 +-------------------+      +-------------------------+             +--------------------------------------+
 | Decision Making   | <--- |  Power BI Dashboard     | <---------- |  MySQL Data Warehouse                |
-| (ODS 8 Policies)  |      |  (Star Schema & DAX)    |  SQL ANSI   |  (dw_turismo_ods8 - Fact & Dims)     |
+| (ODS 8 Policies)  |      |  (Star Schema & DAX)    |   SQL ANSI  |  (dw_turismo_ods8 - Fact & Dims)     |
 +-------------------+      +-------------------------+             +--------------------------------------+
+</pre>
+
+---
 
 ---
 
