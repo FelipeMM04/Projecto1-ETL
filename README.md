@@ -567,7 +567,9 @@ CREATE TABLE fact_turismo_anual (
     CONSTRAINT fk_fact_ubicacion FOREIGN KEY (codigo_municipio) REFERENCES dim_ubicacion (codigo_municipio),
     CONSTRAINT fk_fact_categoria FOREIGN KEY (id_categoria) REFERENCES dim_categoria (id_categoria),
     CONSTRAINT fk_fact_tiempo FOREIGN KEY (anio) REFERENCES dim_tiempo (anio)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; ```
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
+
+```
 
 ---
 
