@@ -711,26 +711,26 @@ El proyecto sigue estrictamente un enfoque **ETL (Extract, Transform, Load)**, g
 
 # 19. System Architecture
 
+# 19. Arquitectura del Sistema
+
 <pre>
 +-------------------------------------------------------------------------------------------------------------------+
-|                                             ANALYTICAL SOLUTION ARCHITECTURE                                      |
+|                                      ARQUITECTURA DE LA SOLUCIÓN ANALÍTICA                                       |
 +-------------------------------------------------------------------------------------------------------------------+
 
- [ DATA SOURCE ]             [ INGESTION & STAGING ]                 [ TRANSFORMATION & ETL ]
+ [ FUENTE DE DATOS ]          [ INGESTIÓN Y STAGING ]               [ TRANSFORMACIÓN Y ETL ]
 +-------------------+      +-------------------------+             +--------------------------------------+
-|  RNT Open Data    | ---> |  Python / Pandas        | ----------> |  Dimensional Data Modeling           |
-|  (Raw Datasets)   |      |  Data Profiling (EDA)   |             |  Data Cleaning & Surrogate Keys      |
+|  Datos Abiertos   | ---> |  Python / Pandas        | ----------> |  Modelado Dimensional                |
+|  RNT (Microdatos) |      |  Profiling (EDA)        |             |  Limpieza y Llaves Subrogadas        |
 +-------------------+      +-------------------------+             +--------------------------------------+
   |
   v
- [ BUSINESS INSIGHTS ]         [ BUSINESS INTELLIGENCE ]            [ DATA WAREHOUSE (PERSISTENCE) ]
+ [ INSIGHTS DE NEGOCIO ]      [ INTELIGENCIA DE NEGOCIO ]           [ DATA WAREHOUSE (PERSISTENCIA) ]
 +-------------------+      +-------------------------+             +--------------------------------------+
-| Decision Making   | <--- |  Power BI Dashboard     | <---------- |  MySQL Data Warehouse                |
-| (ODS 8 Policies)  |      |  (Star Schema & DAX)    |   SQL ANSI  |  (dw_turismo_ods8 - Fact & Dims)     |
+|  Toma de          | <--- |  Dashboard en Power BI  | <---------- |  Data Warehouse en MySQL             |
+|  Decisiones (ODS) |      |  (Modelo Estrella/DAX)  |   SQL ANSI  |  (dw_turismo_ods8 - Hechos y Dims)   |
 +-------------------+      +-------------------------+             +--------------------------------------+
 </pre>
-
----
 
 ---
 
