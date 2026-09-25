@@ -155,8 +155,8 @@ El perfilamiento integral de datos del dataset fuente `Registro_Nacional_de_Turi
 | `CODIGO_RNT` | Integer (`int64`) | 0 (0.00%) | 428 | `12345` |
 | `RAZON_SOCIAL_ESTABLECIMIENTO` | String (`object`) | **75 (0.011%)** | 425 | `HOTEL SAN JUAN` |
 | `NIT` | String (`object`) | 0 (0.00%) | 428 | `900123456-1` |
-| `CODIGO_DEPARTAMENTO` | Integer (`int64`) | 0 (0.00%) | 34 | `76` |
-| `DEPARTAMENTO` | String (`object`) | 0 (0.00%) | 34 | `VALLE DEL CAUCA` |
+| `CODIGO_DEPARTAMENTO` | Integer (`int64`) | 0 (0.00%) | 32 | `76` |
+| `DEPARTAMENTO` | String (`object`) | 0 (0.00%) | 32 | `VALLE DEL CAUCA` |
 | `CODIGO_MUNICIPIO` | Integer (`int64`) | 0 (0.00%) | 1,034 | `76001` |
 | `MUNICIPIO` | String (`object`) | 0 (0.00%) | 1,034 | `CALI` |
 | `CATEGORIA` | String (`object`) | 0 (0.00%) | 13 | `ESTABLECIMIENTOS DE ALOJAMIENTO` |
