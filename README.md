@@ -291,45 +291,45 @@ El diseño del modelo dimensional en estrella (Star Schema) se deriva analítica
 
 ```mermaid
 erDiagram
-    fact_turismo_anual {
-        int id_fact PK
-        int codigo_rnt FK
-        int codigo_municipio FK
-        int id_categoria FK
-        int anio FK
-        int numero_de_habitaciones
-        int numero_de_camas
-        int numero_de_empleados
-    }
+fact_turismo_anual {
+int id_fact PK
+int codigo_rnt FK
+int codigo_municipio FK
+int id_categoria FK
+int anio FK
+int numero_de_habitaciones
+int numero_de_camas
+int numero_de_empleados
+}
 
-    dim_ubicacion {
-        int codigo_municipio PK
-        string municipio
-        int codigo_departamento
-        string departamento
-    }
+dim_ubicacion {
+int codigo_municipio PK
+string municipio
+int codigo_departamento
+string departamento
+}
 
-    dim_categoria {
-        int id_categoria PK
-        string categoria
-        string sub_categoria
-    }
+dim_categoria {
+int id_categoria PK
+string categoria
+string sub_categoria
+}
 
-    dim_prestador {
-        int codigo_rnt PK
-        string razon_social
-        string nit
-        string estado_rnt
-    }
+dim_prestador {
+int codigo_rnt PK
+string razon_social
+string nit
+string estado_rnt
+}
 
-    dim_tiempo {
-        int anio PK
-    }
+dim_tiempo {
+int anio PK
+}
 
-    dim_ubicacion ||--o{ fact_turismo_anual : "contiene"
-    dim_categoria ||--o{ fact_turismo_anual : "clasifica"
-    dim_prestador ||--o{ fact_turismo_anual : "registra"
-    dim_tiempo ||--o{ fact_turismo_anual : "ocurre en"
+dim_ubicacion ||--o{ fact_turismo_anual : contiene
+dim_categoria ||--o{ fact_turismo_anual : clasifica
+dim_prestador ||--o{ fact_turismo_anual : registra
+dim_tiempo ||--o{ fact_turismo_anual : ocurre_en
 ```
 
 ---
