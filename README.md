@@ -21,7 +21,7 @@ Diseñar e implementar una solución analítica de extremo a extremo (ETL y Data
 * **1. ODS Seleccionado:** ODS 8 - Trabajo Decente y Crecimiento Económico.
 * **2. Meta ODS Específica:** Meta 8.9 ("De aquí a 2030, elaborar y aplicar políticas destinadas a promover un turismo sostenible que cree puestos de trabajo y promueva la cultura y los productos locales").
 * **3. Contexto Colombiano y Evidencia:** El sector turístico en Colombia se promueve como un motor clave de la transición económica y la generación de empleo. Sin embargo, existe una fuerte brecha de información centralizada sobre cómo se distribuyen geográficamente los empleos directos y la infraestructura de alojamiento (habitaciones y camas) entre las distintas regiones y categorías de prestadores turísticos.
-* **4. Alcance Geográfico:** Cobertura nacional en Colombia, abarcando 34 departamentos y más de 1,000 municipios reportados en el RNT.
+* **4. Alcance Geográfico:** Cobertura nacional en Colombia, abarcando 32 departamentos y más de 1,000 municipios reportados en el RNT.
 * **5. Población / Sector de Interés:** Prestadores de Servicios Turísticos (PST) inscritos y activos en el Registro Nacional de Turismo (hoteles, agencias de viajes, restaurantes, viviendas turísticas, entre otros).
 * **6. Planteamiento Preciso del Problema:** Asimetría y concentración en la distribución de la capacidad instalada y la generación de empleo formal del sector turístico en Colombia, lo que dificulta a las autoridades identificar municipios desatendidos o con alto potencial de desarrollo turístico sostenible.
 * **7. Stakeholders / Usuarios de la Solución:** 
@@ -116,7 +116,7 @@ La elección de esta fuente oficial se fundamenta directamente en las metas del 
 | **Format** | Comma-Separated Values (CSV) con codificación de texto UTF-8. |
 | **Number of Records** | **679,548 registros** a nivel atómico. |
 | **Number of Attributes** | **14 atributos** nativos. |
-| **Geographic Coverage** | Cobertura nacional completa en Colombia: **34 departamentos** y **1,034 municipios**. |
+| **Geographic Coverage** | Cobertura nacional completa en Colombia: **32 departamentos** y **1,034 municipios**. |
 | **Temporal Coverage** | Serie temporal histórica de 8 años continuos (**2019 a 2026**). |
 | **Relevant Numerical Measures** | `NUMERO_DE_HABITACIONES`, `NUMERO_DE_CAMAS`, `NUMERO_DE_EMPLEADOS` (plazas de trabajo directo). |
 | **Relevant Categorical Attributes** | `CATEGORIA`, `SUB_CATEGORIA`, `DEPARTAMENTO`, `MUNICIPIO`, `ESTADO_RNT`, `RAZON_SOCIAL_ESTABLECIMIENTO`. |
@@ -144,7 +144,7 @@ El perfilamiento integral de datos del dataset fuente `Registro_Nacional_de_Turi
 * **Número Total de Registros (Rows):** 679,548 filas a nivel atómico.
 * **Número Total de Atributos (Columns):** 14 columnas nativas.
 * **Cobertura Temporal (Date Coverage):** Serie histórica continua de 8 años (periodo 2019 a 2026).
-* **Cobertura Geográfica (Geographic Coverage):** 34 departamentos y 1,034 municipios únicos de Colombia (DIVIPOLA).
+* **Cobertura Geográfica (Geographic Coverage):** 32 departamentos y 1,034 municipios únicos de Colombia (DIVIPOLA).
 
 ---
 
